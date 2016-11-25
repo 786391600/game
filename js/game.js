@@ -42,7 +42,7 @@ person.prototype={
     }
 }
 
-function game(can,cobj,run,drmp,za,xueliang,guan) {
+function game(can,cobj,run,drmp,za,xueliang,guan,over) {
     this.cW=document.documentElement.clientWidth||document.body.clientWidth;
     this.cH=document.documentElement.clientHeight||document.body.clientHeight;
     this.xueliang=xueliang;
@@ -60,6 +60,7 @@ function game(can,cobj,run,drmp,za,xueliang,guan) {
     this.xue=new xue(this.cobj,this.cW,this.cH);
     this.guan=1;
     this.guanbox=guan;
+    this.over=over;
    
 
 
@@ -69,6 +70,8 @@ game.prototype={
         start.style.display='none';
         msk.style.display='none';
         this.guanbox.style.display='block';
+        this.msk=msk;
+        this.over.style.display='none';
         this.yundong();
         this.mouse();
         if(this.felg){
@@ -83,7 +86,7 @@ game.prototype={
          var that=this;
         that.xueliang.style.display='block';
         this.felg=true;
-        setInterval(function () {
+        var gtime=setInterval(function () {
             num+=5;
             zanum+=100;
             that.guanbox.innerHTML='你已成为'+that.guan+'级神猪';
@@ -105,7 +108,9 @@ game.prototype={
                             that.shenmin--;
                             if(that.shenmin<=0){
                                 that.xueliang.style.display='none';
-                                alert('游戏失败');
+                                that.over.style.display='block';
+                                that.msk.style.display='block';
+                                clearInterval(gtime);
                             }
 
                         }
